@@ -1,3 +1,3 @@
 ### Plot pack
 
-A simple wrapper around matplotlib
+Wrapper around matplotlib
