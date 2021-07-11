@@ -21,6 +21,7 @@ def minimum_difference(values):
 
 def barplot_numerical(data, xticks=None, title=None, xlabel=None, ylabel=None, fig_filename="test_barplot.png", xlim=None,
                       ylim=None, figure_size=figure_size, dpi=120, show_mean=True):
+    """Create a barplot for numerical data"""
     values, freq = np.unique(data, return_counts=True)
     min_diff = minimum_difference(values)
     fig, ax = plt.subplots()
