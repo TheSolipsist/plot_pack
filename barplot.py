@@ -1,6 +1,5 @@
-from matplotlib import pyplot as plt
-from matplotlib.lines import Line2D
-import numpy as np
+from matplotlib.pyplot import subplots
+from numpy import unique, any
 
 bar_color = (0.6, 0.6, 0.9) # rgb 0-1
 mean_color = (0.4, 0.9, 0.4)
@@ -22,17 +21,17 @@ def minimum_difference(values):
 def barplot_numerical(data, xticks=None, title=None, xlabel=None, ylabel=None, fig_filename="test_barplot.png", xlim=None,
                       ylim=None, figure_size=figure_size, dpi=120, show_mean=True):
     """Create a barplot for numerical data"""
-    values, freq = np.unique(data, return_counts=True)
+    values, freq = unique(data, return_counts=True)
     min_diff = minimum_difference(values)
-    fig, ax = plt.subplots()
+    fig, ax = subplots()
     fig.set_size_inches(figure_size)
-    if np.any(xticks):
+    if any(xticks):
         ax.set_xticks(xticks)
-    if np.any(xlim):
+    if any(xlim):
         ax.set_xlim(xlim)
     else:
         ax.set_xlim(values[0] - min_diff, values[-1] + min_diff)
-    if np.any(ylim):
+    if any(ylim):
         ax.set_ylim(ylim)
     ax.set_title(title)
     ax.set_xlabel(xlabel)
