@@ -1,5 +1,5 @@
-from matplotlib.pyplot import subplots
-from numpy import unique, any
+import matplotlib.pyplot as plt
+import numpy as np
 
 bar_color = (0.6, 0.6, 0.9) # rgb 0-1
 mean_color = (0.4, 0.9, 0.4)
@@ -18,22 +18,29 @@ def minimum_difference(values):
         prev_value = value
     return min_diff
 
-def barplot_numerical(data, xticks=None, title=None, xlabel=None, ylabel=None, fig_filename="test_barplot.png", xlim=None,
-                      ylim=None, figure_size=figure_size, dpi=120, show_mean=True):
+def barplot_numerical(data, xticks=None, yticks=None, title=None, subtitle=None, subtitle_font=None, xlabel=None, ylabel=None, fig_filename="test_barplot.png", xlim=None,
+                      ylim=None, figure_size=figure_size, dpi=120, show_mean=True, 
+                      mean_info=None, extra_info=None, extra_info_pos=None):
     """Create a barplot for numerical data"""
-    values, freq = unique(data, return_counts=True)
+    values, freq = np.unique(data, return_counts=True)
     min_diff = minimum_difference(values)
-    fig, ax = subplots()
+    fig, ax = plt.subplots()
     fig.set_size_inches(figure_size)
-    if any(xticks):
+    if np.any(xticks):
         ax.set_xticks(xticks)
-    if any(xlim):
+    if np.any(yticks):
+        ax.set_yticks(yticks)
+    if np.any(xlim):
         ax.set_xlim(xlim)
     else:
         ax.set_xlim(values[0] - min_diff, values[-1] + min_diff)
-    if any(ylim):
+    if np.any(ylim):
         ax.set_ylim(ylim)
-    ax.set_title(title)
+    if subtitle:
+        fig.suptitle(title)
+        ax.set_title(subtitle, fontsize=subtitle_font)
+    else:
+        ax.set_title(title)
     ax.set_xlabel(xlabel)
     ax.set_ylabel(ylabel)
     ax.yaxis.grid(True, color=grid_color, lw=0.2)
@@ -42,4 +49,8 @@ def barplot_numerical(data, xticks=None, title=None, xlabel=None, ylabel=None, f
     if show_mean:
         mean_line = ax.axvline(data.mean(), color=mean_color, ls="--", lw=2)
         ax.legend([mean_line], ['Mean'], prop={"size": 12})
+    if mean_info:
+        ax.text(data.mean() * 1.02, max(freq), mean_info)
+    if extra_info:
+        fig.text(*extra_info_pos, extra_info)
     fig.savefig(fig_filename, dpi=dpi)
