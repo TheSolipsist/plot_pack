@@ -43,7 +43,7 @@ def barplot_numerical(data, xticks=None, yticks=None, title=None, subtitle=None,
         ax.set_title(title)
     ax.set_xlabel(xlabel)
     ax.set_ylabel(ylabel)
-    ax.yaxis.grid(True, color=grid_color, lw=0.2)
+    ax.yaxis.grid(True, color=grid_color, lw=0.25)
     ax.set_axisbelow(True)
     ax.bar(values, freq, width=min_diff*0.75, color=bar_color, edgecolor=edge_color)
     if show_mean:
